@@ -16,58 +16,90 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0a0a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #0a0a2e 0%, #1a1a3e 50%, #16213e 100%);
             font-family: 'Courier New', monospace;
-            padding: 10px;
+            padding: 20px 10px;
             touch-action: none;
         }
 
         #gameContainer {
             text-align: center;
             width: 100%;
-            max-width: 820px;  /* canvas 800px + padding */
+            max-width: 820px;
             margin: 0 auto;
+            background: rgba(26, 26, 77, 0.3);
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.1);
         }
 
         canvas {
-            border: 3px solid #00ff00;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-            background: #1a1a4d;
+            border: 4px solid #00ff00;
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.3);
+            background: #0d0d2b;
             display: block;
             margin: 0 auto;
             touch-action: none;
+            border-radius: 8px;
         }
 
         #gameInfo {
             color: #00ff00;
-            margin-top: 20px;
-            font-size: 18px;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            margin-top: 25px;
+            font-size: 20px;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         #controls {
-            color: #ffffff;
-            margin-top: 10px;
-            font-size: 14px;
+            color: #a0ffa0;
+            margin-top: 15px;
+            font-size: 15px;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+        }
+
+        #notice {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            color: #00ff00;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(0, 255, 0, 0.6); }
         }
 
         .btn {
-            background: #00ff00;
-            color: #1a1a4d;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+            color: #0a0a2e;
+            border: 2px solid #00ff00;
+            padding: 12px 30px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            margin: 10px 5px;
-            border-radius: 5px;
+            margin: 15px 8px;
+            border-radius: 8px;
             transition: all 0.3s;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3);
         }
 
         .btn:hover {
-            background: #00cc00;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            background: linear-gradient(135deg, #00ff00 0%, #00ff66 100%);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 25px rgba(0, 255, 0, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(1);
         }
 
         #gameOver, #gameWin {
@@ -76,33 +108,36 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border: 3px solid #00ff00;
-            border-radius: 10px;
+            background: rgba(10, 10, 46, 0.95);
+            padding: 50px;
+            border: 4px solid #00ff00;
+            border-radius: 15px;
             color: #00ff00;
-            font-size: 24px;
+            font-size: 28px;
             z-index: 1000;
             text-align: center;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
         }
 
         #pauseBtn {
-            background: rgba(0, 255, 0, 0.8);
-            color: #1a1a4d;
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.9) 0%, rgba(0, 204, 0, 0.9) 100%);
+            color: #0a0a2e;
             border: 2px solid #00ff00;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 25px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: all 0.3s;
             margin-top: 20px;
             display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.4);
         }
 
         #pauseBtn:hover {
-            background: rgba(0, 255, 0, 1);
-            transform: scale(1.05);
+            background: linear-gradient(135deg, rgba(0, 255, 0, 1) 0%, rgba(0, 255, 102, 1) 100%);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 25px rgba(0, 255, 0, 0.6);
         }
 
         #canvasWrapper {
@@ -113,9 +148,12 @@
 </head>
 <body>
     <div id="gameContainer">
-        <h1 style="color: #00ff00; margin-bottom: 20px; text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);">
+        <h1 style="color: #00ff00; margin-bottom: 25px; text-shadow: 0 0 25px rgba(0, 255, 0, 0.8); font-size: 32px;">
             💡 PMFってこういうこと。 💡
         </h1>
+        <div id="notice">
+            ⚠️ 画面の枠内でマウスまたはスワイプ操作をして下さい 👆
+        </div>
         <div id="canvasWrapper">
             <canvas id="gameCanvas"></canvas>
         </div>
