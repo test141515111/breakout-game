@@ -525,7 +525,7 @@
                 obstacleCollision(ball);
 
                 // ボールが画面外に落ちた場合、配列から削除
-                if (ball.y - ball.radius > paddle.y + paddle.height) {
+                if (ball.y - ball.radius > canvas.height) {
                     balls.splice(i, 1);
                 }
             }
