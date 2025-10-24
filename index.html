@@ -496,11 +496,22 @@
                 ball.x += ball.dx;
                 ball.y += ball.dy;
 
-                // 壁との衝突（上のみ、左右は壁オブジェクトで処理）
+                // 上壁との衝突
                 if (ball.y - ball.radius < 0) {
-                    // 上壁に当たった
                     ball.y = ball.radius;
                     ball.dy = Math.abs(ball.dy);
+                    playWallSound();
+                }
+
+                // 左右の壁との衝突（フェイルセーフ：高速ボール対策）
+                if (ball.x - ball.radius < wallThickness) {
+                    ball.x = wallThickness + ball.radius;
+                    ball.dx = Math.abs(ball.dx);
+                    playWallSound();
+                }
+                if (ball.x + ball.radius > BASE_WIDTH - wallThickness) {
+                    ball.x = BASE_WIDTH - wallThickness - ball.radius;
+                    ball.dx = -Math.abs(ball.dx);
                     playWallSound();
                 }
 
@@ -525,7 +536,7 @@
                 obstacleCollision(ball);
 
                 // ボールが画面外に落ちた場合、配列から削除
-                if (ball.y - ball.radius > canvas.height) {
+                if (ball.y - ball.radius > BASE_HEIGHT) {
                     balls.splice(i, 1);
                 }
             }
