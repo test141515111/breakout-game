@@ -182,8 +182,8 @@
         const paddle = {
             width: 100,
             height: 15,
-            x: canvas.width / 2 - 50,
-            y: canvas.height - 30,
+            x: BASE_WIDTH / 2 - 50,
+            y: BASE_HEIGHT - 30,
             speed: 8,
             dx: 0
         };
@@ -203,7 +203,7 @@
         }
 
         function resetBalls() {
-            balls = [createBall(canvas.width / 2, canvas.height / 2, 8, -8)];
+            balls = [createBall(BASE_WIDTH / 2, BASE_HEIGHT / 2, 8, -8)];
         }
 
         // ブロック設定
@@ -224,13 +224,13 @@
                 x: 0,
                 y: 0,
                 width: wallThickness,
-                height: canvas.height
+                height: BASE_HEIGHT
             },
             right: {
-                x: canvas.width - wallThickness,
+                x: BASE_WIDTH - wallThickness,
                 y: 0,
                 width: wallThickness,
-                height: canvas.height
+                height: BASE_HEIGHT
             }
         };
 
@@ -238,19 +238,19 @@
         const obstacle = {
             horizontalLeft: {
                 x: 50,
-                y: canvas.height / 2 - 50,
+                y: BASE_HEIGHT / 2 - 50,
                 width: 320,
                 height: 20
             },
             horizontalRight: {
                 x: 430,
-                y: canvas.height / 2 - 50,
+                y: BASE_HEIGHT / 2 - 50,
                 width: 320,
                 height: 20
             },
             vertical: {
-                x: canvas.width / 2 - 30,
-                y: canvas.height / 2 - 50,
+                x: BASE_WIDTH / 2 - 30,
+                y: BASE_HEIGHT / 2 - 50,
                 width: 60,
                 height: 150
             }
@@ -555,8 +555,8 @@
             if (paddle.x < wallThickness) {
                 paddle.x = wallThickness;
             }
-            if (paddle.x + paddle.width > canvas.width - wallThickness) {
-                paddle.x = canvas.width - wallThickness - paddle.width;
+            if (paddle.x + paddle.width > BASE_WIDTH - wallThickness) {
+                paddle.x = BASE_WIDTH - wallThickness - paddle.width;
             }
         }
 
@@ -579,17 +579,17 @@
                 ctx.fillStyle = '#00ff00';
                 ctx.font = 'bold 48px "Courier New"';
                 ctx.textAlign = 'center';
-                ctx.fillText('BREAKOUT GAME', canvas.width / 2, canvas.height / 2 - 80);
+                ctx.fillText('BREAKOUT GAME', BASE_WIDTH / 2, BASE_HEIGHT / 2 - 80);
 
                 ctx.font = 'bold 32px "Courier New"';
-                ctx.fillText(`STAGE ${currentStage}`, canvas.width / 2, canvas.height / 2 - 30);
+                ctx.fillText(`STAGE ${currentStage}`, BASE_WIDTH / 2, BASE_HEIGHT / 2 - 30);
 
                 ctx.font = 'bold 24px "Courier New"';
-                ctx.fillText('クリック/タップでスタート', canvas.width / 2, canvas.height / 2 + 20);
+                ctx.fillText('クリック/タップでスタート', BASE_WIDTH / 2, BASE_HEIGHT / 2 + 20);
 
                 ctx.font = '16px "Courier New"';
-                ctx.fillText('PC: ← → / A D / マウス', canvas.width / 2, canvas.height / 2 + 60);
-                ctx.fillText('スマホ: タッチで操作', canvas.width / 2, canvas.height / 2 + 85);
+                ctx.fillText('PC: ← → / A D / マウス', BASE_WIDTH / 2, BASE_HEIGHT / 2 + 60);
+                ctx.fillText('スマホ: タッチで操作', BASE_WIDTH / 2, BASE_HEIGHT / 2 + 85);
             }
 
             if (gameRunning && !gamePaused) {
@@ -641,7 +641,7 @@
             document.getElementById('gameOver').style.display = 'none';
             document.getElementById('gameWin').style.display = 'none';
 
-            paddle.x = canvas.width / 2 - 50;
+            paddle.x = BASE_WIDTH / 2 - 50;
             resetBalls();
             initBricks();
         }
@@ -670,11 +670,11 @@
             const scaleX = canvas.width / rect.width;
             const mouseX = (e.clientX - rect.left) * scaleX;
 
-            if (mouseX > wallThickness && mouseX < canvas.width - wallThickness) {
+            if (mouseX > wallThickness && mouseX < BASE_WIDTH - wallThickness) {
                 paddle.x = mouseX - paddle.width / 2;
                 if (paddle.x < wallThickness) paddle.x = wallThickness;
-                if (paddle.x + paddle.width > canvas.width - wallThickness) {
-                    paddle.x = canvas.width - wallThickness - paddle.width;
+                if (paddle.x + paddle.width > BASE_WIDTH - wallThickness) {
+                    paddle.x = BASE_WIDTH - wallThickness - paddle.width;
                 }
             }
         });
@@ -686,11 +686,11 @@
             const scaleX = canvas.width / rect.width;
             const touchX = (e.touches[0].clientX - rect.left) * scaleX;
 
-            if (touchX > wallThickness && touchX < canvas.width - wallThickness) {
+            if (touchX > wallThickness && touchX < BASE_WIDTH - wallThickness) {
                 paddle.x = touchX - paddle.width / 2;
                 if (paddle.x < wallThickness) paddle.x = wallThickness;
-                if (paddle.x + paddle.width > canvas.width - wallThickness) {
-                    paddle.x = canvas.width - wallThickness - paddle.width;
+                if (paddle.x + paddle.width > BASE_WIDTH - wallThickness) {
+                    paddle.x = BASE_WIDTH - wallThickness - paddle.width;
                 }
             }
         }, { passive: false });
