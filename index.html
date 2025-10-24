@@ -174,28 +174,56 @@
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
         // スマホ（特にiOS）でのオーディオ有効化
+        let audioUnlocked = false;
+
         function enableAudio() {
             if (audioContext.state === 'suspended') {
-                audioContext.resume();
+                audioContext.resume().then(() => {
+                    console.log('AudioContext resumed:', audioContext.state);
+                    audioUnlocked = true;
+                });
+            } else {
+                audioUnlocked = true;
+            }
+        }
+
+        // 最初のユーザーインタラクション時にオーディオをアンロック
+        function unlockAudio() {
+            if (!audioUnlocked) {
+                // ダミー音声を再生してAudioContextをアンロック
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.001);
+
+                enableAudio();
             }
         }
 
         function playSound(frequency, duration, type = 'sine') {
-            enableAudio(); // 音声再生前に必ず有効化
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
+            if (!audioUnlocked) return; // アンロック前は音を出さない
 
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
 
-            oscillator.frequency.value = frequency;
-            oscillator.type = type;
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
 
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                oscillator.frequency.value = frequency;
+                oscillator.type = type;
 
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + duration);
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch (e) {
+                console.error('Audio playback error:', e);
+            }
         }
 
         function playBrickSound() { playSound(523.25, 0.1); }  // C5
@@ -662,6 +690,7 @@
 
         // ゲーム開始
         function startGame() {
+            unlockAudio(); // スマホでの音声有効化
             if (!gameRunning) {
                 gameRunning = true;
                 gamePaused = false;
@@ -690,6 +719,7 @@
 
         // 次のステージへ
         function nextStage() {
+            unlockAudio(); // スマホでの音声有効化
             if (currentStage < maxStage) {
                 currentStage++;
                 document.getElementById('stage').textContent = currentStage;
@@ -706,6 +736,7 @@
 
         // ゲームリセット
         function resetGame() {
+            unlockAudio(); // スマホでの音声有効化
             gameRunning = false;
             score = 0;
             lives = 3;
@@ -775,7 +806,7 @@
 
         // キャンバスクリック/タップでゲーム開始
         canvas.addEventListener('click', () => {
-            enableAudio(); // スマホでの音声有効化
+            unlockAudio(); // スマホでの音声有効化
             if (!gameRunning) {
                 startGame();
             }
@@ -783,7 +814,7 @@
 
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            enableAudio(); // スマホでの音声有効化
+            unlockAudio(); // スマホでの音声有効化
             if (!gameRunning) {
                 startGame();
             }
