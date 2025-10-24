@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>クラシックブロック崩し - #barabaraberebere</title>
+    <title>PMFってこういうこと。</title>
     <style>
         * {
             margin: 0;
@@ -85,21 +85,50 @@
             z-index: 1000;
             text-align: center;
         }
+
+        #pauseBtn {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 255, 0, 0.8);
+            color: #1a1a4d;
+            border: 2px solid #00ff00;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+
+        #pauseBtn:hover {
+            background: rgba(0, 255, 0, 1);
+            transform: scale(1.05);
+        }
+
+        #canvasWrapper {
+            position: relative;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
     <div id="gameContainer">
         <h1 style="color: #00ff00; margin-bottom: 20px; text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);">
-            🎮 BREAKOUT GAME 🎮
+            💡 PMFってこういうこと。 💡
         </h1>
-        <canvas id="gameCanvas"></canvas>
+        <div id="canvasWrapper">
+            <canvas id="gameCanvas"></canvas>
+            <button id="pauseBtn" onclick="togglePause()">⏸️ 一時停止</button>
+        </div>
         <div id="gameInfo">
             <span>ステージ: <span id="stage">1</span></span> |
             <span>スコア: <span id="score">0</span></span> |
             <span>ライフ: <span id="lives">3</span></span>
         </div>
         <div id="controls">
-            PC: ← → / A D キーまたはマウス | スマホ: タッチで操作
+            🖥️ PC: ⬅️➡️ / 🅰️🅳 / 🖱️ | 📱 スマホ: 👆タッチ操作
         </div>
         <button class="btn" onclick="startGame()">ゲーム開始</button>
         <button class="btn" onclick="resetGame()">リセット</button>
@@ -146,7 +175,15 @@
         // 効果音システム（Web Audio API）
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
+        // スマホ（特にiOS）でのオーディオ有効化
+        function enableAudio() {
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
+
         function playSound(frequency, duration, type = 'sine') {
+            enableAudio(); // 音声再生前に必ず有効化
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
 
@@ -599,6 +636,20 @@
                 ctx.fillText('スマホ: タッチで操作', BASE_WIDTH / 2, BASE_HEIGHT / 2 + 85);
             }
 
+            // 一時停止中の表示
+            if (gamePaused && gameRunning) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
+
+                ctx.fillStyle = '#00ff00';
+                ctx.font = 'bold 48px "Courier New"';
+                ctx.textAlign = 'center';
+                ctx.fillText('⏸️ PAUSED', BASE_WIDTH / 2, BASE_HEIGHT / 2);
+
+                ctx.font = '20px "Courier New"';
+                ctx.fillText('クリックまたはSpaceキーで再開', BASE_WIDTH / 2, BASE_HEIGHT / 2 + 50);
+            }
+
             if (gameRunning && !gamePaused) {
                 moveBalls();
                 movePaddle();
@@ -615,8 +666,27 @@
         function startGame() {
             if (!gameRunning) {
                 gameRunning = true;
+                gamePaused = false;
                 document.getElementById('gameOver').style.display = 'none';
                 document.getElementById('gameWin').style.display = 'none';
+                updatePauseButton();
+            }
+        }
+
+        // 一時停止/再開
+        function togglePause() {
+            if (!gameRunning) return; // ゲーム中でなければ何もしない
+
+            gamePaused = !gamePaused;
+            updatePauseButton();
+        }
+
+        function updatePauseButton() {
+            const btn = document.getElementById('pauseBtn');
+            if (gamePaused) {
+                btn.textContent = '▶️ 再開';
+            } else {
+                btn.textContent = '⏸️ 一時停止';
             }
         }
 
@@ -660,7 +730,8 @@
             } else if (e.key === 'Left' || e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
                 paddle.dx = -paddle.speed;
             } else if (e.key === ' ') {
-                gamePaused = !gamePaused;
+                e.preventDefault(); // スペースキーのデフォルト動作を防止
+                togglePause();
             }
         });
 
@@ -679,6 +750,7 @@
 
             if (mouseX > wallThickness && mouseX < BASE_WIDTH - wallThickness) {
                 paddle.x = mouseX - paddle.width / 2;
+                paddle.dx = 0; // キーボード操作との競合を防ぐ
                 if (paddle.x < wallThickness) paddle.x = wallThickness;
                 if (paddle.x + paddle.width > BASE_WIDTH - wallThickness) {
                     paddle.x = BASE_WIDTH - wallThickness - paddle.width;
@@ -695,6 +767,7 @@
 
             if (touchX > wallThickness && touchX < BASE_WIDTH - wallThickness) {
                 paddle.x = touchX - paddle.width / 2;
+                paddle.dx = 0; // キーボード操作との競合を防ぐ
                 if (paddle.x < wallThickness) paddle.x = wallThickness;
                 if (paddle.x + paddle.width > BASE_WIDTH - wallThickness) {
                     paddle.x = BASE_WIDTH - wallThickness - paddle.width;
@@ -704,6 +777,7 @@
 
         // キャンバスクリック/タップでゲーム開始
         canvas.addEventListener('click', () => {
+            enableAudio(); // スマホでの音声有効化
             if (!gameRunning) {
                 startGame();
             }
@@ -711,6 +785,7 @@
 
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            enableAudio(); // スマホでの音声有効化
             if (!gameRunning) {
                 startGame();
             }
