@@ -16,8 +16,8 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
-            font-family: 'Courier New', monospace;
+            background: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             padding: 20px 10px;
             touch-action: none;
         }
@@ -27,79 +27,65 @@
             width: 100%;
             max-width: 820px;
             margin: 0 auto;
-            background: rgba(255, 240, 245, 0.5);
+            background: #ffffff;
             padding: 30px 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 40px rgba(255, 105, 180, 0.2);
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
         }
 
         canvas {
-            border: 4px solid #FF69B4;
-            box-shadow: 0 0 40px rgba(255, 105, 180, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid #FF69B4;
             background: #2b1a2b;
             display: block;
             margin: 0 auto;
             touch-action: none;
-            border-radius: 8px;
+            border-radius: 4px;
         }
 
         #gameInfo {
-            color: #FF1493;
+            color: #333333;
             margin-top: 25px;
-            font-size: 20px;
-            text-shadow: 0 0 15px rgba(255, 20, 147, 0.6);
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         #controls {
-            color: #FF69B4;
+            color: #666666;
             margin-top: 15px;
-            font-size: 15px;
-            text-shadow: 0 0 8px rgba(255, 105, 180, 0.3);
+            font-size: 14px;
         }
 
         #notice {
-            background: rgba(255, 182, 193, 0.3);
+            background: #ffffff;
             border: 2px solid #FF69B4;
             border-radius: 8px;
-            padding: 15px 20px;
+            padding: 12px 20px;
             margin-bottom: 20px;
             color: #FF1493;
-            font-size: 16px;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(255, 105, 180, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(255, 105, 180, 0.6); }
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .btn {
-            background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%);
+            background: #FF69B4;
             color: #ffffff;
-            border: 2px solid #FF1493;
-            padding: 12px 30px;
-            font-size: 18px;
-            font-weight: bold;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
-            margin: 15px 8px;
-            border-radius: 8px;
-            transition: all 0.3s;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+            margin: 10px 6px;
+            border-radius: 6px;
+            transition: background 0.2s;
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #FF69B4 0%, #FF1493 100%);
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 25px rgba(255, 105, 180, 0.6);
+            background: #FF1493;
         }
 
         .btn:active {
-            transform: translateY(0) scale(1);
+            background: #D01070;
         }
 
         #gameOver, #gameWin {
@@ -108,36 +94,60 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 240, 245, 0.95);
-            padding: 50px;
-            border: 4px solid #FF69B4;
-            border-radius: 15px;
-            color: #FF1493;
-            font-size: 28px;
+            background: #ffffff;
+            padding: 30px 20px;
+            border: 2px solid #FF69B4;
+            border-radius: 12px;
+            color: #333333;
+            font-size: 18px;
             z-index: 1000;
             text-align: center;
-            box-shadow: 0 0 50px rgba(255, 105, 180, 0.5);
+            max-width: 90%;
+            width: 320px;
+        }
+
+        #gameOver h2, #gameWin h2 {
+            color: #FF1493;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        #gameOver p, #gameWin p {
+            font-size: 16px;
+            margin: 8px 0;
         }
 
         #pauseBtn {
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.9) 0%, rgba(255, 105, 180, 0.9) 100%);
+            background: #FF69B4;
             color: #ffffff;
-            border: 2px solid #FF1493;
-            padding: 12px 25px;
-            font-size: 17px;
-            font-weight: bold;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s;
+            border-radius: 6px;
+            transition: background 0.2s;
             margin-top: 20px;
             display: inline-block;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
         }
 
         #pauseBtn:hover {
-            background: linear-gradient(135deg, rgba(255, 105, 180, 1) 0%, rgba(255, 20, 147, 1) 100%);
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 25px rgba(255, 105, 180, 0.6);
+            background: #FF1493;
+        }
+
+        @media (max-width: 600px) {
+            #gameOver, #gameWin {
+                padding: 24px 16px;
+                font-size: 16px;
+            }
+
+            #gameOver h2, #gameWin h2 {
+                font-size: 20px;
+            }
+
+            #gameOver p, #gameWin p {
+                font-size: 14px;
+            }
         }
 
         #canvasWrapper {
@@ -148,7 +158,7 @@
 </head>
 <body>
     <div id="gameContainer">
-        <h1 style="color: #FF1493; margin-bottom: 25px; text-shadow: 0 0 25px rgba(255, 20, 147, 0.8); font-size: 32px;">
+        <h1 style="color: #FF1493; margin-bottom: 25px; font-size: 28px; font-weight: 600;">
             💡 PMFってこういうこと。 💡
         </h1>
         <div id="notice">
@@ -171,14 +181,14 @@
 
         <div id="gameOver">
             <h2>GAME OVER</h2>
-            <p style="margin-top: 20px;">到達ステージ: <span id="finalStage">1</span></p>
+            <p>到達ステージ: <span id="finalStage">1</span></p>
             <p>最終スコア: <span id="finalScore">0</span></p>
             <button class="btn" onclick="resetGame()">もう一度プレイ</button>
         </div>
 
         <div id="gameWin">
             <h2>🎉 STAGE CLEAR! 🎉</h2>
-            <p style="margin-top: 20px;">ステージ: <span id="winStage">1</span></p>
+            <p>ステージ: <span id="winStage">1</span></p>
             <p>スコア: <span id="winScore">0</span></p>
             <button class="btn" onclick="nextStage()">次のステージへ</button>
             <button class="btn" onclick="resetGame()">最初から</button>
