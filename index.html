@@ -87,19 +87,17 @@
         }
 
         #pauseBtn {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
             background: rgba(0, 255, 0, 0.8);
             color: #1a1a4d;
             border: 2px solid #00ff00;
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: 10px 20px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
-            z-index: 10;
             transition: all 0.3s;
+            margin-top: 20px;
+            display: inline-block;
         }
 
         #pauseBtn:hover {
@@ -120,13 +118,13 @@
         </h1>
         <div id="canvasWrapper">
             <canvas id="gameCanvas"></canvas>
-            <button id="pauseBtn" onclick="togglePause()">⏸️ 一時停止</button>
         </div>
         <div id="gameInfo">
             <span>ステージ: <span id="stage">1</span></span> |
             <span>スコア: <span id="score">0</span></span> |
             <span>ライフ: <span id="lives">3</span></span>
         </div>
+        <button id="pauseBtn" onclick="togglePause()">⏸️ 一時停止 (Space)</button>
         <div id="controls">
             🖥️ PC: ⬅️➡️ / 🅰️🅳 / 🖱️ | 📱 スマホ: 👆タッチ操作
         </div>
