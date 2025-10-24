@@ -474,10 +474,6 @@
                 return false;
             }
 
-            // 左右の壁との衝突をチェック
-            handleRectCollision(walls.left);
-            handleRectCollision(walls.right);
-
             // 左側の横棒との衝突をチェック
             handleRectCollision(obstacle.horizontalLeft);
 
@@ -506,12 +502,12 @@
                 // 左右の壁との衝突（フェイルセーフ：高速ボール対策）
                 if (ball.x - ball.radius < wallThickness) {
                     ball.x = wallThickness + ball.radius;
-                    ball.dx = Math.abs(ball.dx);
+                    if (ball.dx < 0) ball.dx = -ball.dx; // 左に移動中なら右に反転
                     playWallSound();
                 }
                 if (ball.x + ball.radius > BASE_WIDTH - wallThickness) {
                     ball.x = BASE_WIDTH - wallThickness - ball.radius;
-                    ball.dx = -Math.abs(ball.dx);
+                    if (ball.dx > 0) ball.dx = -ball.dx; // 右に移動中なら左に反転
                     playWallSound();
                 }
 
