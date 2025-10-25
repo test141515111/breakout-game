@@ -323,7 +323,7 @@
         const brickWidth = 35;
         const brickHeight = 15;
         const brickPadding = 3;
-        const brickOffsetTop = 50;
+        const brickOffsetTop = 20;  // 壁の上部との隙間を短縮
         const brickOffsetLeft = 20;
 
         let bricks = [];
@@ -345,18 +345,18 @@
             }
         };
 
-        // T字型障害物（横棒を左右に分割、stroke分の隙間を考慮）
+        // T字型障害物（横棒を完全に壁まで届かせ、縦棒と重複させる）
         const obstacle = {
             horizontalLeft: {
                 x: wallThickness,
                 y: BASE_HEIGHT / 2 - 50,
-                width: BASE_WIDTH / 2 - 30 - wallThickness + 2,  // stroke重複用に+2
+                width: BASE_WIDTH / 2 - 30 - wallThickness + 3,  // 縦棒と3px重複
                 height: 20
             },
             horizontalRight: {
-                x: BASE_WIDTH / 2 + 30 - 2,  // stroke重複用に-2
+                x: BASE_WIDTH / 2 + 30 - 3,  // 縦棒と3px重複
                 y: BASE_HEIGHT / 2 - 50,
-                width: BASE_WIDTH / 2 - 30 - wallThickness + 2,  // stroke重複用に+2
+                width: BASE_WIDTH / 2 - 30 - wallThickness + 3,
                 height: 20
             },
             vertical: {
