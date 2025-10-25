@@ -285,7 +285,7 @@
         let gameRunning = false;
         let gamePaused = false;
         let score = 0;
-        let lives = 3;
+        let lives = 3;  // 1ステージで3回のみリトライ可能
         let currentStage = 1;
         const maxStage = 10;
 
@@ -329,7 +329,7 @@
         let bricks = [];
 
         // 左右の壁を追加（完全な壁）
-        const wallThickness = 5;
+        const wallThickness = 10;  // 壁の厚さを増やして視認性向上
         const walls = {
             left: {
                 x: 0,
@@ -419,7 +419,7 @@
 
         // 壁を描画
         function drawWalls() {
-            ctx.fillStyle = '#666666';
+            ctx.fillStyle = '#ffffff';  // 白色で視認性向上
             ctx.fillRect(walls.left.x, walls.left.y, walls.left.width, walls.left.height);
             ctx.fillRect(walls.right.x, walls.right.y, walls.right.width, walls.right.height);
         }
