@@ -348,20 +348,20 @@
         // T字型障害物（横棒を左右に分割して重なりをなくす）
         const obstacle = {
             horizontalLeft: {
-                x: 50,
-                y: BASE_HEIGHT * 0.6,
-                width: 320,
+                x: wallThickness,
+                y: BASE_HEIGHT * 0.45,
+                width: BASE_WIDTH / 2 - 30 - wallThickness,
                 height: 20
             },
             horizontalRight: {
-                x: 430,
-                y: BASE_HEIGHT * 0.6,
-                width: 320,
+                x: BASE_WIDTH / 2 + 30,
+                y: BASE_HEIGHT * 0.45,
+                width: BASE_WIDTH / 2 - 30 - wallThickness,
                 height: 20
             },
             vertical: {
                 x: BASE_WIDTH / 2 - 30,
-                y: BASE_HEIGHT * 0.6,
+                y: BASE_HEIGHT * 0.45,
                 width: 60,
                 height: 150
             }
