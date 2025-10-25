@@ -345,18 +345,18 @@
             }
         };
 
-        // T字型障害物（横棒を左右に分割して重なりをなくす）
+        // T字型障害物（横棒を左右に分割、stroke分の隙間を考慮）
         const obstacle = {
             horizontalLeft: {
                 x: wallThickness,
                 y: BASE_HEIGHT / 2 - 50,
-                width: BASE_WIDTH / 2 - 30 - wallThickness,
+                width: BASE_WIDTH / 2 - 30 - wallThickness + 2,  // stroke重複用に+2
                 height: 20
             },
             horizontalRight: {
-                x: BASE_WIDTH / 2 + 30,
+                x: BASE_WIDTH / 2 + 30 - 2,  // stroke重複用に-2
                 y: BASE_HEIGHT / 2 - 50,
-                width: BASE_WIDTH / 2 - 30 - wallThickness,
+                width: BASE_WIDTH / 2 - 30 - wallThickness + 2,  // stroke重複用に+2
                 height: 20
             },
             vertical: {
